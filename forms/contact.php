@@ -1,9 +1,9 @@
 <?php
-  
+
     $nombre =$_POST["nombre"];
     $mensaje=$_POST["message"];
     $correo = $_POST["email"];
-    $correo2 = 'contacto@secmaseguridad.com.mx';
+    $correo2 = 'sistemas@ce2000.mx';
     $remitente="SECMA SEGURIDAD";
     $asunto=$_POST["subject"];
     $cuerpo="
