@@ -18,7 +18,6 @@
     </html> 
     ";
     $sheader="From:".$remitente."\n";
-    $sheader=$sheader."BCC:sistemas@ce2000.mx";
     $sheader=$sheader."X-Mailer:PHP/".phpversion()."\n";
     $sheader=$sheader."Mime-Version: 1.0\n";
     $sheader=$sheader."Content-Type: text/html; charset=utf-8\n";
