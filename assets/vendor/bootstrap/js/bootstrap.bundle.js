@@ -1,11 +1,20 @@
-
+/*!
+  * Bootstrap v5.2.3 (https://getbootstrap.com/)
+  * Copyright 2011-2022 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.bootstrap = factory());
 })(this, (function () { 'use strict';
 
-
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): util/index.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
   const MAX_UID = 1000000;
   const MILLISECONDS_MULTIPLIER = 1000;
   const TRANSITION_END = 'transitionend'; // Shout-out Angus Croll (https://goo.gl/pxwQGp)
@@ -17,7 +26,9 @@
 
     return Object.prototype.toString.call(object).match(/\s([a-z]+)/i)[1].toLowerCase();
   };
-
+  /**
+   * Public Util API
+   */
 
 
   const getUID = prefix => {
@@ -32,11 +43,14 @@
     let selector = element.getAttribute('data-bs-target');
 
     if (!selector || selector === '#') {
-      let hrefAttribute = element.getAttribute('href'); 
+      let hrefAttribute = element.getAttribute('href'); // The only valid content that could double as a selector are IDs or classes,
+      // so everything starting with `#` or `.`. If a "real" URL is used as the selector,
+      // `document.querySelector` will rightfully complain it is invalid.
+      // See https://github.com/twbs/bootstrap/issues/32273
 
       if (!hrefAttribute || !hrefAttribute.includes('#') && !hrefAttribute.startsWith('.')) {
         return null;
-      } 
+      } // Just in case some CMS puts out a full URL with the anchor appended
 
 
       if (hrefAttribute.includes('#') && !hrefAttribute.startsWith('#')) {
@@ -67,7 +81,7 @@
   const getTransitionDurationFromElement = element => {
     if (!element) {
       return 0;
-    }
+    } // Get transition-duration of the element
 
 
     let {
@@ -75,10 +89,11 @@
       transitionDelay
     } = window.getComputedStyle(element);
     const floatTransitionDuration = Number.parseFloat(transitionDuration);
-    const floatTransitionDelay = Number.parseFloat(transitionDelay); 
+    const floatTransitionDelay = Number.parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
+
     if (!floatTransitionDuration && !floatTransitionDelay) {
       return 0;
-    } 
+    } // If multiple durations are defined, take the first
 
 
     transitionDuration = transitionDuration.split(',')[0];
@@ -103,7 +118,7 @@
   };
 
   const getElement = object => {
-    
+    // it's a jQuery object or a node element
     if (isElement$1(object)) {
       return object.jquery ? object[0] : object;
     }
@@ -162,7 +177,7 @@
   const findShadowRoot = element => {
     if (!document.documentElement.attachShadow) {
       return null;
-    } 
+    } // Can find the shadow root otherwise it'll return the document
 
 
     if (typeof element.getRootNode === 'function') {
@@ -172,7 +187,7 @@
 
     if (element instanceof ShadowRoot) {
       return element;
-    } 
+    } // when we don't find a shadow root
 
 
     if (!element.parentNode) {
@@ -194,7 +209,7 @@
 
 
   const reflow = element => {
-    element.offsetHeight; 
+    element.offsetHeight; // eslint-disable-line no-unused-expressions
   };
 
   const getjQuery = () => {
@@ -209,7 +224,7 @@
 
   const onDOMContentLoaded = callback => {
     if (document.readyState === 'loading') {
-     
+      // add listener on the first call when the document is in loading state
       if (!DOMContentLoadedCallbacks.length) {
         document.addEventListener('DOMContentLoaded', () => {
           for (const callback of DOMContentLoadedCallbacks) {
@@ -229,7 +244,7 @@
   const defineJQueryPlugin = plugin => {
     onDOMContentLoaded(() => {
       const $ = getjQuery();
-      
+      /* istanbul ignore if */
 
       if ($) {
         const name = plugin.NAME;
@@ -281,19 +296,21 @@
     }, emulatedDuration);
   };
   /**
-   * 
+   * Return the previous/next element of a list.
    *
-   * @param {array} list    
-   * @param activeElement  
-   * @param shouldGetNext   
+   * @param {array} list    The list of elements
+   * @param activeElement   The active element
+   * @param shouldGetNext   Choose to get next or previous element
    * @param isCycleAllowed
-   * @return {Element|elem} 
+   * @return {Element|elem} The proper element
    */
 
 
   const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {
     const listLength = list.length;
-    let index = list.indexOf(activeElement); 
+    let index = list.indexOf(activeElement); // if the element does not exist in the list return an element
+    // depending on the direction and if cycle is allowed
+
     if (index === -1) {
       return !shouldGetNext && isCycleAllowed ? list[listLength - 1] : list[0];
     }
@@ -307,19 +324,30 @@
     return list[Math.max(0, Math.min(index, listLength - 1))];
   };
 
-  
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): dom/event-handler.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  /**
+   * Constants
+   */
 
   const namespaceRegex = /[^.]*(?=\..*)\.|.*/;
   const stripNameRegex = /\..*/;
   const stripUidRegex = /::\d+$/;
-  const eventRegistry = {}; 
+  const eventRegistry = {}; // Events storage
+
   let uidEvent = 1;
   const customEvents = {
     mouseenter: 'mouseover',
     mouseleave: 'mouseout'
   };
   const nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mousemove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
-
+  /**
+   * Private methods
+   */
 
   function makeEventUid(element, uid) {
     return uid && `${uid}::${uidEvent++}` || element.uidEvent || uidEvent++;
@@ -377,7 +405,8 @@
   }
 
   function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
-    const isDelegated = typeof handler === 'string'; 
+    const isDelegated = typeof handler === 'string'; // todo: tooltip passes `false` instead of selector, so we need to check
+
     const callable = isDelegated ? delegationFunction : handler || delegationFunction;
     let typeEvent = getTypeEvent(originalTypeEvent);
 
@@ -393,7 +422,8 @@
       return;
     }
 
-    let [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction); 
+    let [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction); // in case of mouseenter or mouseleave wrap the handler within a function that checks for its DOM position
+    // this prevents the handler from being dispatched the same way as mouseover or mouseout does
 
     if (originalTypeEvent in customEvents) {
       const wrapFunction = fn => {
@@ -563,7 +593,16 @@
     return obj;
   }
 
- 
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): dom/data.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  /**
+   * Constants
+   */
   const elementMap = new Map();
   const Data = {
     set(element, key, instance) {

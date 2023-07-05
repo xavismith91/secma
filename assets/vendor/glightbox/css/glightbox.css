@@ -198,7 +198,7 @@
 
 .gslide-video .gvideo-wrapper {
   width: 100%;
-        
+        /* max-width: 160vmin; */
   margin: auto;
 }
 
