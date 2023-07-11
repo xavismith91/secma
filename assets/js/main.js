@@ -242,4 +242,16 @@
    */
   new PureCounter();
 
+/**
+   * alert 
+   */
+
+document.getElementById("alert").addEventListener("click", function() {
+  Swal.fire('Mensaje Enviado')
+  timer: 3500
+});
+
+
+
+
 })()
