@@ -1015,14 +1015,20 @@
                   <input type="email" class="form-control" name="email" id="email" placeholder="Correo" required>
                 </div>
               </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Asunto" required>
-              </div>
+                <div class="row">
+                          <div class="col-lg-6 form-group">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Asunto" required>
+                          </div>
+
+                          <div class="col-lg-6 form-group">
+                            <input type="text" class="form-control" name="telefono" id="subject" placeholder="Teléfono" required>
+                          </div>
+                </div>
               <div class="form-group">
                 <textarea class="form-control" name="message" rows="5" placeholder="Escribe aquí" required></textarea>
               </div>
               <div class="text-center"><button id="alert" type="submit">Enviar Mensaje</button></div>
-              <script src="main.js"></script>
+              <script src="/assets/vendor/php-email-form/validate.js"></script>
             </form> 
           </div>
 
