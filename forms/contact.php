@@ -23,7 +23,7 @@
     $sheader=$sheader."X-Mailer:PHP/".phpversion()."\n";
     $sheader=$sheader."Mime-Version: 1.0\n";
     $sheader=$sheader."Content-Type: text/html; charset=utf-8\n";
-    mail($correo2,$asunto,$telefono,$cuerpo,$sheader,$mensaje); 
+    mail($correo2,$asunto,$cuerpo,$sheader,$mensaje); 
 
 
       header("Location: ../index.html");
