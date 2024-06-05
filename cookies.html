@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso de Privacidad y Cookies</title>
+    <style>
+        #cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        #cookie-consent button {
+            background-color: #f1c40f;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="cookie-consent">
+        <p>Este sitio utiliza cookies para mejorar su experiencia. Al continuar navegando, acepta nuestra <a href="#">Política de Privacidad</a> y el uso de cookies.</p>
+        <div>
+            <button id="accept-cookies">Aceptar</button>
+            <button id="decline-cookies">Denegar</button>
+        </div>
+    </div>
+
+    <script>
+       // Verificar si el usuario ya ha aceptado o denegado las cookies
+       if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'declined') {
+            document.getElementById('cookie-consent').style.display = 'none';
+        }
+
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookie-consent').style.display = 'none';
+        });
+
+        document.getElementById('decline-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'declined');
+            window.location.href = 'https://www.google.com';
+        });
+    </script>
+</body>
+</html>
