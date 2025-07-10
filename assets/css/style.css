@@ -1513,3 +1513,102 @@ section {
 }
 
 
+/* dark mode propeties */
+
+
+<!-- ...existing code... -->
+<style>
+  /* Switch estilo */
+  .dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+  }
+  .switch input { display: none; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: #222;
+  }
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+
+  /* Modo oscuro general */
+  body.dark-mode {
+    background: #181818 !important;
+    color: #f1f1f1 !important;
+  }
+  body.dark-mode header,
+  body.dark-mode footer,
+  /* body.dark-mode .container, */
+  body.dark-mode .section-title,
+  body.dark-mode .about-content,
+  body.dark-mode .icon-box,
+  body.dark-mode .portfolio-wrap,
+  body.dark-mode .info-box,
+  body.dark-mode .php-email-form,
+  body.dark-mode .credits {
+    background: #232323 !important;
+    color: #f1f1f1 !important;
+  }
+  body.dark-mode a { color: #90caf9 !important; }
+  body.dark-mode .icon,
+  body.dark-mode .bi { color: #90caf9 !important; }
+  body.dark-mode input,
+  body.dark-mode textarea {
+    background: #222 !important;
+    color: #f1f1f1 !important;
+    border-color: #444 !important;
+  }
+  body.dark-mode .btn-get-started,
+  body.dark-mode button,
+  body.dark-mode .slider {
+    background: #333 !important;
+    color: #fff !important;
+  }
+
+  /* Modo oscuro para Casos de Éxito */
+  body.dark-mode .portfolio.section-bg,
+  body.dark-mode .portfolio-wrap,
+  body.dark-mode .portfolio-info,
+  body.dark-mode .portfolio-item {
+    background: #232323 !important;
+    color: #f1f1f1 !important;
+    border-color: #333 !important;
+  }
+  body.dark-mode .portfolio-info h4 {
+    color: #90caf9 !important;
+  }
+  body.dark-mode .portfolio-info p {
+    color: #f1f1f1 !important;
+  }
+
+  /* Ajustes responsivos */
+  @media (max-width: 768px) {
+    .dark-mode-toggle { top: 10px; right: 10px; }
+  }
+</style>
+<!-- ...existing code... -->

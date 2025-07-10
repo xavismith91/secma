@@ -53,7 +53,14 @@
           <li><a href="https://www.linkedin.com/company/75869283/admin/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></i></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
+        <div class="dark-mode-toggle">
+  <label class="switch">
+    <input type="checkbox" id="darkModeSwitch">
+    <span class="slider"></span>
+  </label>
+</div>
       </nav>
+
 
     </div>
   </header>
@@ -910,6 +917,30 @@
         return "¿Estás seguro de que quieres salir? Los cambios no guardados se perderán.";
     };
   </script>
+
+<script>
+  // Función para aplicar el modo oscuro según localStorage
+  function applyDarkModeSetting() {
+    const isDark = localStorage.getItem('darkMode') === 'enabled';
+    document.body.classList.toggle('dark-mode', isDark);
+    document.getElementById('darkModeSwitch').checked = isDark;
+  }
+
+  // Inicializar al cargar
+  document.addEventListener('DOMContentLoaded', function() {
+    applyDarkModeSetting();
+    document.getElementById('darkModeSwitch').addEventListener('change', function() {
+      if (this.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+  });
+</script>
+
 
 </body>
 
