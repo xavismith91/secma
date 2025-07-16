@@ -1565,6 +1565,7 @@ section {
   body.dark-mode footer,
   /* body.dark-mode .container, */
   body.dark-mode .section-title,
+  body.dark-mode .breadcrumbs,
   body.dark-mode .about-content,
   body.dark-mode .icon-box,
   body.dark-mode .portfolio-wrap,
