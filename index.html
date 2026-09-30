@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -55,7 +55,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
         <div class="dark-mode-toggle">
           <label class="switch">
-            <input type="checkbox" id="darkModeSwitch">
+            <input type="checkbox" id="darkModeSwitch" aria-label="Activar modo oscuro">
             <span class="slider"></span>
           </label>
         </div>
@@ -919,25 +919,17 @@
   </script> -->
 
 <script>
-  // Función para aplicar el modo oscuro según localStorage
-  function applyDarkModeSetting() {
-    const isDark = localStorage.getItem('darkMode') === 'enabled';
-    document.body.classList.toggle('dark-mode', isDark);
-    document.getElementById('darkModeSwitch').checked = isDark;
-  }
+  const darkModeSwitch = document.getElementById('darkModeSwitch');
+  const savedTheme = localStorage.getItem('darkMode');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const useDarkMode = savedTheme ? savedTheme === 'enabled' : prefersDark;
 
-  // Inicializar al cargar
-  document.addEventListener('DOMContentLoaded', function() {
-    applyDarkModeSetting();
-    document.getElementById('darkModeSwitch').addEventListener('change', function() {
-      if (this.checked) {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-      } else {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-      }
-    });
+  document.body.classList.toggle('dark-mode', useDarkMode);
+  darkModeSwitch.checked = useDarkMode;
+
+  darkModeSwitch.addEventListener('change', function() {
+    document.body.classList.toggle('dark-mode', this.checked);
+    localStorage.setItem('darkMode', this.checked ? 'enabled' : 'disabled');
   });
 </script>
 
