@@ -31,6 +31,27 @@
 
 <body>
 
+  <div id="page-skeleton" class="privacy-skeleton" aria-hidden="true">
+    <div class="skeleton-header">
+      <span class="skeleton-block skeleton-logo"></span>
+      <span class="skeleton-block skeleton-nav"></span>
+    </div>
+    <div class="skeleton-hero skeleton-privacy-hero">
+      <span class="skeleton-block skeleton-privacy-eyebrow"></span>
+      <span class="skeleton-block skeleton-heading"></span>
+      <span class="skeleton-block skeleton-copy skeleton-copy-short"></span>
+    </div>
+    <div class="skeleton-content skeleton-privacy-content">
+      <span class="skeleton-block skeleton-section-title"></span>
+      <span class="skeleton-block skeleton-content-line"></span>
+      <span class="skeleton-block skeleton-content-line"></span>
+      <span class="skeleton-block skeleton-content-line skeleton-content-short"></span>
+      <span class="skeleton-block skeleton-section-title"></span>
+      <span class="skeleton-block skeleton-content-line"></span>
+      <span class="skeleton-block skeleton-content-line"></span>
+      <span class="skeleton-block skeleton-content-line skeleton-content-short"></span>
+    </div>
+  </div>
 
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center">
@@ -67,7 +88,9 @@
 
     <header class="privacy-hero">
       <div class="container">
+        <p class="privacy-eyebrow">SECMA · INFORMACIÓN LEGAL</p>
         <h1>Aviso de Privacidad</h1>
+        <p class="privacy-intro">Conoce cómo recabamos, utilizamos y protegemos tus datos personales.</p>
       </div>
     </header>
 
@@ -75,35 +98,58 @@
       <div class="container">
         <article class="privacy-document" data-aos="fade-up">
           <h2>SECMA</h2>
+          <section class="privacy-clause">
+            <h3>Responsable y finalidades</h3>
           <p>
           Es responsable de recabar sus datos personales, del uso que se le dé a los mismos y de su protección, Su información personal será utilizada para promover los
           servicios y productos que ha solicitado, informarle sobre cambios en los mismos y evaluar la calidad del servicio que le brindamos.
           </p>
+          </section>
+          <section class="privacy-clause">
+            <h3>Datos personales y derechos</h3>
           <p>
           Para las finalidades antes mencionadas, requerimos los siguientes datos personales: <strong>Nombre, Teléfono, Correo Electrónico y Ocupación </strong>, Usted tiene derecho a acceder, rectificar, y cancelar sus datos personales, asi como al tratamiento 
           de los mismos o revocar el consentimiento para tal fin nos haya otorgado, a través de los procedimientos que hemos implementado. Para conocer dichos procedimientos, los requisitos, los plazos, se puede poner en contacto con nuestro departamento de datos personales 
           mediante el correo <strong>contacto@secmaseguidad.com.mx</strong> que con gusto le atenderán.
           </p>
-
+          </section>
+          <section class="privacy-clause">
+            <h3>Transferencia de datos</h3>
           <p>
           Así mismo, le informamos que sus datos personales pueden ser transferidos y tratados dentro y fuera del país, por distintas empresas a esta empresa. En este sentido, su información puede ser
           compartida a disitinas empresas con el fin de hacer promoción de Marketing. Para que sus datos sean transferidos.
           </p>
-
+          </section>
+          <section class="privacy-clause">
+            <h3>Mensajes promocionales</h3>
           <p>
           Si usted desea dejar de recibir mensajes promocionales de nuestra parte puede solicitarlo a través del teléfono: <strong> 55-1243-6257</strong> y al teléfono <strong>contacto@secmaseguridad.com.mx</strong>
           </p>
-
+          </section>
+          <section class="privacy-clause">
+            <h3>Tratamiento y consentimiento</h3>
           <p>
           En cumplimiento de la LOPD, le información que sus datos podrían pasar a formar parte de SECMA SEGURIDAD. Usted tiene derecho de acceso, rectificación, oposición y cancelación que puede ejercer mediante escrito a la dirección indicada.
           Por la presente autoriza expresamente a la compañia a que le remita información sobre sus servicios a la direción indicada en el formulario de contacto.  La información ofrecida en esta página web es meramente orientativa y no es, en ningún caso vinculante.
           </p>
+          </section>
         </article>
       </div>
     </section>
 
   </main>
 
+  <aside id="cookie-consent" aria-label="Aviso de privacidad y cookies">
+    <div class="cookie-consent-icon" aria-hidden="true"><i class="bi bi-shield-lock"></i></div>
+    <div class="cookie-consent-copy">
+      <h2 id="cookie-consent-title">Tu privacidad importa</h2>
+      <p id="cookie-consent-description">Usamos cookies para mejorar tu experiencia. Conoce cómo protegemos tus datos en nuestro <a href="politica.html">Aviso de Privacidad</a>.</p>
+    </div>
+    <div class="cookie-consent-actions">
+      <button type="button" id="decline-cookies">Denegar</button>
+      <button type="button" id="accept-cookies">Aceptar cookies</button>
+    </div>
+  </aside>
 
   <footer id="footer">
     <div class="container">
@@ -126,10 +172,24 @@
   <script src="assets/js/main.js"></script>
 
 <script>
+  const cookieConsent = document.getElementById('cookie-consent');
+  if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'declined') {
+    cookieConsent.style.display = 'none';
+  }
+
+  document.getElementById('accept-cookies').addEventListener('click', function() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    cookieConsent.style.display = 'none';
+  });
+
+  document.getElementById('decline-cookies').addEventListener('click', function() {
+    localStorage.setItem('cookieConsent', 'declined');
+    cookieConsent.style.display = 'none';
+  });
+
   const darkModeSwitch = document.getElementById('darkModeSwitch');
   const savedTheme = localStorage.getItem('darkMode');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const useDarkMode = savedTheme ? savedTheme === 'enabled' : prefersDark;
+  const useDarkMode = savedTheme === 'enabled';
 
   document.body.classList.toggle('dark-mode', useDarkMode);
   darkModeSwitch.checked = useDarkMode;
@@ -138,6 +198,13 @@
     document.body.classList.toggle('dark-mode', this.checked);
     localStorage.setItem('darkMode', this.checked ? 'enabled' : 'disabled');
   });
+
+  const hidePageSkeleton = () => document.body.classList.add('page-loaded');
+  if (document.readyState === 'complete') {
+    hidePageSkeleton();
+  } else {
+    window.addEventListener('load', hidePageSkeleton, { once: true });
+  }
 </script>
 
 

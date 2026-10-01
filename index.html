@@ -33,12 +33,28 @@
 
 <body>
 
+  <div id="page-skeleton" aria-hidden="true">
+    <div class="skeleton-header">
+      <span class="skeleton-block skeleton-logo"></span>
+      <span class="skeleton-block skeleton-nav"></span>
+    </div>
+    <div class="skeleton-hero">
+      <span class="skeleton-block skeleton-heading"></span>
+      <span class="skeleton-block skeleton-copy"></span>
+      <span class="skeleton-block skeleton-copy skeleton-copy-short"></span>
+    </div>
+    <div class="skeleton-content">
+      <span class="skeleton-block skeleton-section-title"></span>
+      <span class="skeleton-block skeleton-content-line"></span>
+      <span class="skeleton-block skeleton-content-line skeleton-content-short"></span>
+    </div>
+  </div>
 
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center">
 
       <div class="logo me-auto">
-        <h1 class="logo"><img src="/assets/img/slide/logo_secma.png"> </h1> 
+        <h1 class="logo"><img src="assets/img/slide/logo_secma.png" alt="SECMA"></h1> 
       </div>
     
       <nav id="navbar" class="navbar">
@@ -821,31 +837,31 @@
         <br>
         <br>
         <br>
-        <div class="row">
+        <div class="row opportunity-actions">
           <div class="section-title">
             <h2>Bolsa de Trabajo | Ventas </h2>
           </div>
-          <div class="col-lg-6 d-flex" data-aos="fade-up" class="php-email-form">
+          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up">
             <div class="info-box">
               <i class="bx bx-briefcase"></i>
               <h3>Vacantes</h3>
-              <p> <div class="text-center"><button type="submit"><a href="https://www.linkedin.com/company/75869283/admin/" target="_blank">Quiero Aplicar</a></button></div></p>
+              <a class="opportunity-button" href="https://www.linkedin.com/company/75869283/admin/" target="_blank" rel="noopener noreferrer">Quiero Aplicar <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
             </div>
           </div>
 
-          <div class="col-lg-3 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="info-box">
               <i class="bx bx-envelope"></i>
               <h3>Ventas</h3>
-              <button type="submit"><a href="mailto:contacto@secmaseguridad.com.mx">Quiero Presupuesto</a></button>
+              <a class="opportunity-button" href="mailto:contacto@secmaseguridad.com.mx">Quiero Presupuesto <i class="bi bi-envelope" aria-hidden="true"></i></a>
             </div>
           </div>
 
-          <div class="col-lg-3 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="info-box ">
               <i class="bx bx-phone-call"></i>
               <h3>Llámanos</h3>
-                  <button type="submit"><a href="tel:+525512436257">Voy a Llamar</a><p></p></button>
+              <a class="opportunity-button" href="tel:+525512436257">Voy a Llamar <i class="bi bi-telephone" aria-hidden="true"></i></a>
             </div>
           </div>
         </div>
@@ -864,13 +880,17 @@
   </ main>
 
 
-  <div id="cookie-consent">
-    <p>Este sitio utiliza cookies para mejorar su experiencia. Al continuar navegando, acepta nuestra <a href="politica.html">Política de Privacidad</a> y el uso de cookies.</p>
-    <div>
-        <button id="accept-cookies">Aceptar</button>
-        <button id="decline-cookies">Denegar</button>
+  <aside id="cookie-consent" aria-label="Aviso de privacidad y cookies">
+    <div class="cookie-consent-icon" aria-hidden="true"><i class="bi bi-shield-lock"></i></div>
+    <div class="cookie-consent-copy">
+      <h2 id="cookie-consent-title">Tu privacidad importa</h2>
+      <p id="cookie-consent-description">Usamos cookies para mejorar tu experiencia. Conoce cómo protegemos tus datos en nuestro <a href="politica.html">Aviso de Privacidad</a>.</p>
     </div>
-</div>
+    <div class="cookie-consent-actions">
+      <button type="button" id="decline-cookies">Denegar</button>
+      <button type="button" id="accept-cookies">Aceptar cookies</button>
+    </div>
+  </aside>
 
 
   <footer id="footer">
@@ -905,7 +925,7 @@
 
         document.getElementById('decline-cookies').addEventListener('click', function() {
             localStorage.setItem('cookieConsent', 'declined');
-            window.location.href = 'https://www.google.com';
+          document.getElementById('cookie-consent').style.display = 'none';
         });
 </script>
  
@@ -921,8 +941,7 @@
 <script>
   const darkModeSwitch = document.getElementById('darkModeSwitch');
   const savedTheme = localStorage.getItem('darkMode');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const useDarkMode = savedTheme ? savedTheme === 'enabled' : prefersDark;
+  const useDarkMode = savedTheme === 'enabled';
 
   document.body.classList.toggle('dark-mode', useDarkMode);
   darkModeSwitch.checked = useDarkMode;
@@ -931,6 +950,13 @@
     document.body.classList.toggle('dark-mode', this.checked);
     localStorage.setItem('darkMode', this.checked ? 'enabled' : 'disabled');
   });
+
+  const hidePageSkeleton = () => document.body.classList.add('page-loaded');
+  if (document.readyState === 'complete') {
+    hidePageSkeleton();
+  } else {
+    window.addEventListener('load', hidePageSkeleton, { once: true });
+  }
 </script>
 
 
