@@ -2862,3 +2862,8 @@ body.dark-mode .privacy-clause + .privacy-clause {
     width: 56px;
   }
 }
+
+
+.parrafo-justificado {
+  text-align: justify;
+}
